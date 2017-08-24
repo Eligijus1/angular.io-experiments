@@ -5,16 +5,16 @@ import { HEROES } from './mock-heroes';
 
 @Injectable()
 export class HeroService {
-/**
- * To coordinate the view with the response, using Promises,
- * which is an asynchronous technique that changes the signature
- * of the getHeroes() method.
- *
- * A Promise essentially promises to call back when the results
- * are ready. You ask an asynchronous service to do some work and
- * give it a callback function. The service does that work and
- * eventually calls the function with the results or an error.
- */
+  /**
+   * To coordinate the view with the response, using Promises,
+   * which is an asynchronous technique that changes the signature
+   * of the getHeroes() method.
+   *
+   * A Promise essentially promises to call back when the results
+   * are ready. You ask an asynchronous service to do some work and
+   * give it a callback function. The service does that work and
+   * eventually calls the function with the results or an error.
+   */
   getHeroes(): Promise<Hero[]> {
     return Promise.resolve(HEROES);
   }
@@ -27,5 +27,10 @@ export class HeroService {
       // Simulate server latency with 2 second delay
       setTimeout(() => resolve(this.getHeroes()), 2000);
     });
+  }
+
+  getHero(id: number): Promise<Hero> {
+    return this.getHeroes()
+      .then(heroes => heroes.find(hero => hero.id === id));
   }
 }
